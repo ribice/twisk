@@ -1,4 +1,4 @@
-# Twisk - Twirp Starter Kit
+# Twisk - Golang RPC starter kit
 
 [![Build Status](https://travis-ci.org/ribice/twisk.svg?branch=master)](https://travis-ci.org/ribice/twisk)
 [![codecov](https://codecov.io/gh/ribice/twisk/branch/master/graph/badge.svg)](https://codecov.io/gh/ribice/twisk)
