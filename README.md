@@ -32,16 +32,17 @@ The following dependencies are used in this project (generated using [Glice](htt
 |                      DEPENDENCY                       |                    REPOURL                     |   LICENSE    |
 |-------------------------------------------------------|------------------------------------------------|--------------|
 | github.com/golang/protobuf                            | https://github.com/golang/protobuf             | bsd-3-clause |
-| gopkg.in/yaml.v2                                      | https://github.com/go-yaml/yaml                |              |
+| gopkg.in/yaml.v2                                      | https://github.com/go-yaml/yaml                | Apache-2.0   |
+| github.com/mwitkow/go-proto-validators                | https://github.com/mwitkow/go-proto-validators | Apache-2.0   |
 | github.com/twitchtv/twirp                             | https://github.com/twitchtv/twirp              | Other        |
 | github.com/gorilla/mux                                | https://github.com/gorilla/mux                 | bsd-3-clause |
 | github.com/justinas/alice                             | https://github.com/justinas/alice              | MIT          |
 | github.com/go-pg/pg                                   | https://github.com/go-pg/pg                    | bsd-2-clause |
+| github.com/rs/xid                                     | https://github.com/rs/xid                      | MIT          |
+| github.com/nbutton23/zxcvbn-go                        | https://github.com/nbutton23/zxcvbn-go         | MIT          |
 | github.com/rakyll/statik                              | https://github.com/rakyll/statik               | Apache-2.0   |
 | github.com/dgrijalva/jwt-go                           | https://github.com/dgrijalva/jwt-go            | MIT          |
 | github.com/rs/zerolog                                 | https://github.com/rs/zerolog                  | MIT          |
-| github.com/rs/xid                                     | https://github.com/rs/xid                      | MIT          |
-| github.com/nbutton23/zxcvbn-go                        | https://github.com/nbutton23/zxcvbn-go         | MIT          |
 |-------------------------------------------------------|------------------------------------------------|--------------|
 ```
 
@@ -57,7 +58,7 @@ The following dependencies are used in this project (generated using [Glice](htt
 10. XID - Refresh token generation
 11. ZXCVBN-Go - Password strength checker
 
-Most of these can easily be replaced with your own choices since their usage is abstracted and localized. In addition to these, the following libraries were used:
+Most of these can easily be replaced with your own choices since their usage is abstracted and localized. In addition to these, the following tools were used:
 
 * Retool - Go executables vendoring
 * GoValidators - Proto (request/response) validation
