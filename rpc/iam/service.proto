@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package twisk.iam;
+
+import "github.com/mwitkow/go-proto-validators/validator.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+option go_package = "iam";
+
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+    info: {
+        title: "Twisk IAM Service  Documentation";
+        version: "1.0";
+    };
+    external_docs: {
+        url: "https://github.com/ribice/twisk";
+        description: "Twisk github repository";
+    };
+    schemes: HTTPS;
+};
+
+// IAM service handles user identity and access management
+service IAM {
+    // Authenticate user by username or email and password
+    rpc Auth(AuthReq) returns (AuthResp);
+
+    // Refresh refreshes JWT token
+    rpc Refresh(RefreshReq) returns (RefreshResp);
+}
+
+// Password authentication request
+message AuthReq {
+    // Required
+    string auth = 1 [
+        (validator.field) = {string_not_empty : true}
+    ];
+
+    // Required
+    string password = 2 [
+        (validator.field) = {string_not_empty : true}
+    ];
+}
+
+// Password authentication response
+message AuthResp {
+    // Access token
+    string token = 1;
+
+    // Refresh token
+    string refresh_token = 2;
+}
+
+// Refresh token request
+message RefreshReq{
+        // Required
+        string token = 1 [
+            (validator.field) = {length_eq: 20}
+        ];
+}
+
+// Refresh token response
+message RefreshResp {
+    // Access token
+    string token = 1;
+}

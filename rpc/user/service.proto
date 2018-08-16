@@ -1,0 +1,136 @@
+syntax = "proto3";
+
+package twisk.user;
+
+import "github.com/mwitkow/go-proto-validators/validator.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+import "google/protobuf/timestamp.proto";
+ 
+option go_package = "user";
+
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+    info: {
+        title: "Twisk User Service Twirp/JSON API Documentation";
+        version: "1.0";
+    };
+    external_docs: {
+        url: "https://github.com/ribice/twisk";
+        description: "Twisk github repository";
+    };
+    schemes: HTTPS;
+};
+
+// User service handles user crud
+service User { 
+    // Create creates a new user.
+    // In order to create a new user, the authority requesting it must be logged and have same or higher permissions.
+    rpc Create(CreateReq) returns (Resp);
+    // View views a single user.
+    // User requesting it must be an admin or under same tenant.
+    rpc View(IDReq) returns(Resp);
+    // List lists all users belonging to the same tenant.
+    rpc List(ListReq) returns(ListResp);
+    // Update updates a single user.
+    rpc Update(UpdateReq) returns (Resp);
+    // Delete deletes a user
+    rpc Delete(IDReq) returns(MessageResp);
+}
+
+// Create request
+message CreateReq {
+    // Required. Username represents user's unique username. Must be at least 3 and at most 20 characters.
+    // Can contain only alphanumeric characters, dot and underscore.
+    // Username cannot start with dot or underscore, and cannot have those characters consecutively
+    string username = 1 [
+        (validator.field) = {
+            regex: "^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]{2,15})*$"
+            human_error: "Invalid username format"
+        }
+    ];
+
+    // Required.
+    string email = 2 [
+        (validator.field) = {
+            regex : "^[a-z0-9._\\-]+@[a-z0-9.\\-]+\\.[a-z]{2,4}$"
+            human_error: "Invalid email address"
+        }
+     ];
+
+    // Required.
+    string first_name = 3 [
+        (validator.field) = {length_gt: 2 length_lt: 24}
+    ];
+
+    // Required.
+    string last_name = 4 [
+        (validator.field) = {length_gt: 2 length_lt: 24}
+    ];
+
+    // Required.
+    string password = 5 [
+        (validator.field) = {length_gt: 6 length_lt: 128}
+    ];
+
+    int32 role_id = 6 [(validator.field) = {int_gt: 0 int_lt: 5}];
+
+    int32 tenant_id = 7 [(validator.field) = {int_gt: 0}];
+}
+
+// Response
+message Resp {
+    int64 ID = 1;
+    string username = 2;
+    string email = 3;
+    string first_name = 4;
+    string last_name = 5;
+    string phone = 6;
+    string address = 7;
+    bool active = 8;
+    int32 tenant_id = 10;
+    google.protobuf.Timestamp created_at = 11;
+    google.protobuf.Timestamp updated_at = 12;
+    google.protobuf.Timestamp deleted_at = 13;
+    google.protobuf.Timestamp last_login = 14;
+    google.protobuf.Timestamp last_password_change = 15;
+
+    enum RoleName {
+        INVALID = 0;
+        SUPER_ADMIN = 1;
+        ADMIN = 2;
+        TENANT_ADMIN = 3;
+        USER = 4;
+    }
+
+    RoleName role_name = 16;
+}
+
+// ID request
+message IDReq {
+    int64 ID = 1[(validator.field) = {int_gt: 0}];
+}
+
+// List response
+message ListResp {
+    repeated Resp users = 1;
+}
+
+// List request
+message ListReq {
+    int32 page = 1 [(validator.field) = {int_gt: 0}];
+    int32 limit = 2 [(validator.field) = {int_gt: -1}];
+    int32 tenant_id = 3;
+}
+
+// Update request
+message UpdateReq {
+    int64 ID = 1[(validator.field) = {int_gt: 0}];
+    string first_name = 2 [(validator.field) = {length_gt: 2 length_lt: 24}];
+    string last_name = 3 [(validator.field) = {length_gt: 2 length_lt: 24}];
+    string phone = 4;
+    string address = 5;
+}
+
+// Message response
+message MessageResp {
+    string message = 1;
+}

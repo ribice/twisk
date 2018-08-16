@@ -1,0 +1,334 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Twisk User Service Twirp/JSON API Documentation",
+    "version": "1.0"
+  },
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/twirp/twisk.user.User/Create": {
+      "post": {
+        "summary": "Create creates a new user.\nIn order to create a new user, the authority requesting it must be logged and have same or higher permissions.",
+        "operationId": "Create",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/userResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userCreateReq"
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/twirp/twisk.user.User/Delete": {
+      "post": {
+        "summary": "Delete deletes a user",
+        "operationId": "Delete",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/userMessageResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userIDReq"
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/twirp/twisk.user.User/List": {
+      "post": {
+        "summary": "List lists all users belonging to the same tenant.",
+        "operationId": "List",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/userListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userListReq"
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/twirp/twisk.user.User/Update": {
+      "post": {
+        "summary": "Update updates a single user.",
+        "operationId": "Update",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/userResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userUpdateReq"
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/twirp/twisk.user.User/View": {
+      "post": {
+        "summary": "View views a single user.\nUser requesting it must be an admin or under same tenant.",
+        "operationId": "View",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/userResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userIDReq"
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "RespRoleName": {
+      "type": "string",
+      "enum": [
+        "INVALID",
+        "SUPER_ADMIN",
+        "ADMIN",
+        "TENANT_ADMIN",
+        "USER"
+      ],
+      "default": "INVALID"
+    },
+    "userCreateReq": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "title": "Required. Username represents user's unique username. Must be at least 3 and at most 20 characters.\nCan contain only alphanumeric characters, dot and underscore.\nUsername cannot start with dot or underscore, and cannot have those characters consecutively"
+        },
+        "email": {
+          "type": "string",
+          "description": "Required."
+        },
+        "first_name": {
+          "type": "string",
+          "description": "Required."
+        },
+        "last_name": {
+          "type": "string",
+          "description": "Required."
+        },
+        "password": {
+          "type": "string",
+          "description": "Required."
+        },
+        "role_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "tenant_id": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Create request"
+    },
+    "userIDReq": {
+      "type": "object",
+      "properties": {
+        "ID": {
+          "type": "string",
+          "format": "int64"
+        }
+      },
+      "title": "ID request"
+    },
+    "userListReq": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "limit": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "tenant_id": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "List request"
+    },
+    "userListResp": {
+      "type": "object",
+      "properties": {
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/userResp"
+          }
+        }
+      },
+      "title": "List response"
+    },
+    "userMessageResp": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      },
+      "title": "Message response"
+    },
+    "userResp": {
+      "type": "object",
+      "properties": {
+        "ID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "tenant_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "deleted_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_login": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_password_change": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "role_name": {
+          "$ref": "#/definitions/RespRoleName"
+        }
+      },
+      "title": "Response"
+    },
+    "userUpdateReq": {
+      "type": "object",
+      "properties": {
+        "ID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        }
+      },
+      "title": "Update request"
+    }
+  },
+  "externalDocs": {
+    "description": "Twisk github repository",
+    "url": "https://github.com/ribice/twisk"
+  }
+}

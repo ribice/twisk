@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Swagger UI</title>
+    <base href="/">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./openapi/swagger-ui.css" >
+    <link rel="icon" type="image/png" href="./openapi/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="./openapi/favicon-16x16.png" sizes="16x16" />
+    <style>
+        html
+        {
+            box-sizing: border-box;
+            overflow: -moz-scrollbars-vertical;
+            overflow-y: scroll;
+        }
+
+        *,
+        *:before,
+        *:after
+        {
+            box-sizing: inherit;
+        }
+
+        body
+        {
+            margin:0;
+            background: #fafafa;
+        }
+
+        .download-url-wrapper {
+            display: none !important;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        li > a {
+            display: inline-block;
+            padding: 16px;
+            width: 100%;
+            background-color: #E9F6F0 !important;
+            color: #000;
+            text-decoration: none;
+            font-size: 18px;
+            margin-bottom: 12px;
+            border: 1px solid #49cc90;
+            border-radius: 4px;
+        }
+
+        li > a:hover {
+            opacity: 0.9;
+            background-color: #eee !important;
+        }
+
+        ul {
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="swagger-ui">
+        <section data-reactroot="" class="swagger-ui swagger-container">
+            <div class="topbar"><div class="wrapper"><div class="topbar-wrapper"><a href="https://twisk.com" class="link"><span>Twirp Starter Kit</span></a><form class="download-url-wrapper"><input type="text" class="download-url-input" value="./proto/user/service.swagger.json" style=""><button class="download-url-button button">Explore</button></form></div></div></div>
+            <div class="swagger-ui">
+                <div>
+                    <div class="information-container wrapper"><section class="block col-12"><div class="info"><hgroup class="main"><h2 class="title"><!-- react-text: 53 -->Twisk API Documentation<!-- /react-text --><small><pre class="version"><!-- react-text: 56 --> <!-- /react-text --><!-- react-text: 57 -->1.0<!-- /react-text --><!-- react-text: 58 --> <!-- /react-text --></pre></small></h2></hgroup><div class="description"><div class="markdown"></div></div></div></section></div>
+                </div> 
+                <div>
+                    <div class="information-container wrapper">
+
+                    <section class="block col-12">
+                        <h2>Twirp Services</h2>
+                        <ul>
+                        {{$SERVICE_LINKS}}
+                        </ul>
+                    </section>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

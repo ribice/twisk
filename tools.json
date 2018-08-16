@@ -1,0 +1,17 @@
+{
+  "Tools": [
+    {
+      "Repository": "github.com/twitchtv/twirp/protoc-gen-twirp",
+      "Commit": "59d9d44fba085c60e61a28a6180433efcfe150e7"
+    },
+    {
+      "Repository": "github.com/mwitkow/go-proto-validators/protoc-gen-govalidators",
+      "Commit": "0950a79900071e9f3f5979b78078c599376422fd"
+    },
+    {
+      "Repository": "github.com/elliots/protoc-gen-twirp_swagger",
+      "Commit": "5f13214f71d7b2425fecd1751e7330173124d0ea"
+    }
+  ],
+  "RetoolVersion": "1.3.7"
+}

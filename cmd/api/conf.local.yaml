@@ -1,0 +1,25 @@
+server:
+  port: :8080
+  read_timeout_seconds: 31
+  write_timeout_seconds: 30
+
+database:
+  # postgres://docvsjvu:hR7Zs5Yx58hKSoMOGeYjgJj3BbLZcQvM@horton.elephantsql.com:5432/docvsjvu
+  # Provided database is a sample instance from elephantsql.com
+  # Feel free to use it for testing. You can easily host one for yourself 
+  # and fill in the data using cmd/api/migration.go
+  psn: postgres://postgres:postgres@localhost:5432/postgres
+  log_queries: false
+  timeout_seconds: 10
+
+jwt:
+  secret: jwtsecret # Change this value
+  duration_minutes: 15
+  signing_algorithm: HS256
+
+application:
+  min_password_strength: 1 # Minimum password zxcvbn strength
+
+openapi:
+ username: admin
+ password: admin

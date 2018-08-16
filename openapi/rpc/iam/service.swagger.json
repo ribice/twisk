@@ -1,0 +1,126 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Twisk IAM Service  Documentation",
+    "version": "1.0"
+  },
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/twirp/twisk.iam.IAM/Auth": {
+      "post": {
+        "summary": "Authenticate user by username or email and password",
+        "operationId": "Auth",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/iamAuthResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/iamAuthReq"
+            }
+          }
+        ],
+        "tags": [
+          "IAM"
+        ]
+      }
+    },
+    "/twirp/twisk.iam.IAM/Refresh": {
+      "post": {
+        "summary": "Refresh refreshes JWT token",
+        "operationId": "Refresh",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/iamRefreshResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/iamRefreshReq"
+            }
+          }
+        ],
+        "tags": [
+          "IAM"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "iamAuthReq": {
+      "type": "object",
+      "properties": {
+        "auth": {
+          "type": "string",
+          "title": "Required"
+        },
+        "password": {
+          "type": "string",
+          "title": "Required"
+        }
+      },
+      "title": "Password authentication request"
+    },
+    "iamAuthResp": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "title": "Access token"
+        },
+        "refresh_token": {
+          "type": "string",
+          "title": "Refresh token"
+        }
+      },
+      "title": "Password authentication response"
+    },
+    "iamRefreshReq": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "title": "Required"
+        }
+      },
+      "title": "Refresh token request"
+    },
+    "iamRefreshResp": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "title": "Access token"
+        }
+      },
+      "title": "Refresh token response"
+    }
+  },
+  "externalDocs": {
+    "description": "Twisk github repository",
+    "url": "https://github.com/ribice/twisk"
+  }
+}

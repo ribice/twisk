@@ -1,0 +1,15 @@
+#!/bin/bash
+
+echo "Running protoc..."
+for D in ./rpc/*; do
+        retool do protoc \
+            -I vendor/github.com/grpc-ecosystem/grpc-gateway/ \
+            -I vendor/ \
+            --proto_path=. \
+            --twirp_out=. \
+            --go_out=. \
+            --govalidators_out=. \
+            --twirp_swagger_out=openapi/ \
+            ${D}/service.proto
+done
+echo "Done."

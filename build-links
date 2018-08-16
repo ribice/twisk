@@ -1,0 +1,12 @@
+#/bin/bash
+
+links=""
+tpl='<li><a href="./service.html?url=./proto/SERVICE/service.swagger.json"><b>SERVICE</b> - proto/SERVICE/service.swagger.json</a></li>'
+
+for D in ./openapi/proto/*; do
+    link=$tpl
+    svc=`basename ${D}`
+    links+="${link//SERVICE/$svc}"
+done
+
+echo $links
