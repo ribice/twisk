@@ -1,9 +1,8 @@
-#Twisk - Twirp Starter Kit
+# Twisk - Twirp Starter Kit
 
 [![Build Status](https://travis-ci.org/ribice/twisk.svg?branch=master)](https://travis-ci.org/ribice/twisk)
 [![codecov](https://codecov.io/gh/ribice/twisk/branch/master/graph/badge.svg)](https://codecov.io/gh/ribice/twisk)
 [![Go Report Card](https://goreportcard.com/badge/github.com/ribice/twisk)](https://goreportcard.com/report/github.com/ribice/twisk)
-[![Maintainability](https://api.codeclimate.com/v1/badges/c3cb09dbc0bc43186464/maintainability)](https://codeclimate.com/github/ribice/twisk/maintainability)
 
 Twisk is a starter kit for [Twirp](https://github.com/twitchtv/twirp) - a framework for service-to-service communication emphasizing simplicity and minimalism.
 

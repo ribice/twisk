@@ -9,10 +9,10 @@ import (
 
 	"github.com/ribice/twisk/model"
 
+	"github.com/ribice/twisk/internal/user"
 	"github.com/ribice/twisk/mock"
 	"github.com/ribice/twisk/mock/mockdb"
 	userpb "github.com/ribice/twisk/rpc/user"
-	"github.com/ribice/twisk/internal/user"
 	"github.com/stretchr/testify/assert"
 )
 
