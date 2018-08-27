@@ -28,6 +28,13 @@ func TestAuth(t *testing.T) {
 		wantData *iampb.AuthResp
 	}{
 		{
+			name: "Fail on validation",
+			req: &iampb.AuthReq{
+				Auth: "onlyauth",
+			},
+			wantErr: true,
+		},
+		{
 			name: "Fail on FindByAuth",
 			req: &iampb.AuthReq{
 				Auth:     "email@mail.com",
@@ -172,9 +179,16 @@ func TestRefresh(t *testing.T) {
 		wantData *iampb.RefreshResp
 	}{
 		{
+			name: "Fail on validation",
+			req: &iampb.RefreshReq{
+				Token: "tooshort",
+			},
+			wantErr: true,
+		},
+		{
 			name: "Fail on FindByToken",
 			req: &iampb.RefreshReq{
-				Token: "refresh",
+				Token: "lengthis10lengthis20",
 			},
 			udb: &mockdb.User{
 				FindByTokenFn: func(orm.DB, string) (*twisk.User, error) {
@@ -186,7 +200,7 @@ func TestRefresh(t *testing.T) {
 		{
 			name: "Fail on GenerateToken",
 			req: &iampb.RefreshReq{
-				Token: "refresh",
+				Token: "lengthis10lengthis20",
 			},
 			udb: &mockdb.User{
 				FindByTokenFn: func(orm.DB, string) (*twisk.User, error) {
@@ -209,7 +223,7 @@ func TestRefresh(t *testing.T) {
 		{
 			name: "Success",
 			req: &iampb.RefreshReq{
-				Token: "refresh",
+				Token: "lengthis10lengthis20",
 			},
 			udb: &mockdb.User{
 				FindByTokenFn: func(orm.DB, string) (*twisk.User, error) {

@@ -51,6 +51,10 @@ var (
 
 // Auth tries to authenticate user given username and password
 func (s *Service) Auth(c context.Context, req *iam.AuthReq) (*iam.AuthResp, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+
 	dbCtx := s.db.WithContext(c)
 
 	usr, err := s.udb.FindByAuth(dbCtx, req.Auth)
@@ -90,6 +94,10 @@ func (s *Service) Auth(c context.Context, req *iam.AuthReq) (*iam.AuthResp, erro
 
 // Refresh refreshes user's jwt token
 func (s *Service) Refresh(c context.Context, req *iam.RefreshReq) (*iam.RefreshResp, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+
 	usr, err := s.udb.FindByToken(s.db.WithContext(c), req.Token)
 	if err != nil {
 		return nil, invalidToken

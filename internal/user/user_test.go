@@ -2,6 +2,7 @@ package user_test
 
 import (
 	"context"
+	"fmt"
 	"testing"
 
 	"github.com/go-pg/pg"
@@ -20,12 +21,19 @@ func TestCreate(t *testing.T) {
 	cases := []struct {
 		name     string
 		req      *userpb.CreateReq
-		wantData *userpb.Resp
 		udb      *mockdb.User
 		rbac     *mock.RBAC
 		sec      *mock.Secure
+		wantData *userpb.Resp
 		wantErr  bool
 	}{
+		{
+			name:    "Fail on validation",
+			wantErr: true,
+			req: &userpb.CreateReq{
+				Username: "in__va__lid",
+			},
+		},
 		{
 			name:    "Fail on RBAC",
 			wantErr: true,
@@ -35,8 +43,13 @@ func TestCreate(t *testing.T) {
 				},
 			},
 			req: &userpb.CreateReq{
-				RoleId:   123,
-				TenantId: 234,
+				Username:  "ribice",
+				Email:     "ribice@gmail.com",
+				FirstName: "John",
+				LastName:  "Doe",
+				Password:  "testing",
+				RoleId:    3,
+				TenantId:  2,
 			},
 		},
 		{
@@ -49,8 +62,13 @@ func TestCreate(t *testing.T) {
 				PasswordFn: func(string, ...string) bool { return false },
 			},
 			req: &userpb.CreateReq{
-				RoleId:   123,
-				TenantId: 234,
+				Username:  "ribice",
+				Email:     "ribice@gmail.com",
+				FirstName: "John",
+				LastName:  "Doe",
+				Password:  "testing",
+				RoleId:    3,
+				TenantId:  2,
 			},
 		},
 		{
@@ -69,8 +87,13 @@ func TestCreate(t *testing.T) {
 				},
 			},
 			req: &userpb.CreateReq{
-				RoleId:   123,
-				TenantId: 234,
+				Username:  "ribice",
+				Email:     "ribice@gmail.com",
+				FirstName: "John",
+				LastName:  "Doe",
+				Password:  "testing",
+				RoleId:    3,
+				TenantId:  2,
 			},
 		},
 		{
@@ -90,7 +113,7 @@ func TestCreate(t *testing.T) {
 			req: &userpb.CreateReq{
 				RoleId:    1,
 				TenantId:  2,
-				Email:     "laRgE@mail.com",
+				Email:     "large@mail.com",
 				Username:  "juzernejm",
 				Password:  "notHashed",
 				FirstName: "John",
@@ -112,6 +135,7 @@ func TestCreate(t *testing.T) {
 			s := user.New(dbcl, tt.udb, tt.rbac, tt.sec, nil)
 			usr, err := s.Create(nil, tt.req)
 			if tt.wantData != nil {
+				fmt.Printf("Case %v, User %v, Error %v", tt.name, usr, err)
 				tt.wantData.CreatedAt = usr.CreatedAt
 				tt.wantData.UpdatedAt = usr.UpdatedAt
 			}
@@ -130,6 +154,13 @@ func TestList(t *testing.T) {
 		auth     *mock.Auth
 		wantErr  bool
 	}{
+		{
+			name:    "Fail on validation",
+			wantErr: true,
+			req: &userpb.ListReq{
+				Limit: 50, Page: -5,
+			},
+		},
 		{
 			name:    "Fail on UserDB list",
 			wantErr: true,
@@ -220,6 +251,13 @@ func TestView(t *testing.T) {
 		wantErr  bool
 	}{
 		{
+			name:    "Fail on validation",
+			wantErr: true,
+			req: &userpb.IDReq{
+				ID: -5,
+			},
+		},
+		{
 			name:    "Fail on userDB view",
 			wantErr: true,
 			udb: &mockdb.User{
@@ -301,6 +339,13 @@ func TestDelete(t *testing.T) {
 		rbac     *mock.RBAC
 		wantErr  bool
 	}{
+		{
+			name:    "Fail on validation",
+			wantErr: true,
+			req: &userpb.IDReq{
+				ID: -5,
+			},
+		},
 		{
 			name:    "Fail on userDB view",
 			wantErr: true,
@@ -412,6 +457,14 @@ func TestUpdate(t *testing.T) {
 		wantErr  bool
 	}{
 		{
+			name:    "Fail on validation",
+			wantErr: true,
+			req: &userpb.UpdateReq{
+				FirstName: "Johnn",
+				LastName:  "Doee",
+			},
+		},
+		{
 			name:    "Fail on Enforce User",
 			wantErr: true,
 			rbac: &mock.RBAC{
@@ -422,6 +475,7 @@ func TestUpdate(t *testing.T) {
 			req: &userpb.UpdateReq{
 				FirstName: "Johnn",
 				LastName:  "Doee",
+				ID:        123,
 			},
 		},
 		{
@@ -440,6 +494,7 @@ func TestUpdate(t *testing.T) {
 			req: &userpb.UpdateReq{
 				FirstName: "Johnn",
 				LastName:  "Doee",
+				ID:        123,
 			},
 		},
 		{
@@ -467,6 +522,7 @@ func TestUpdate(t *testing.T) {
 			req: &userpb.UpdateReq{
 				FirstName: "Johnn",
 				LastName:  "Doee",
+				ID:        123,
 			},
 		},
 		{

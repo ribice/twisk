@@ -55,6 +55,10 @@ type Securer interface {
 
 // Create creates a new user account
 func (s *Service) Create(c context.Context, req *user.CreateReq) (*user.Resp, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+
 	if !s.rbac.EnforceTenantAndRole(c, twisk.AccessRole(req.RoleId), req.TenantId) {
 		return nil, unauthorizedErr
 	}
@@ -82,6 +86,10 @@ func (s *Service) Create(c context.Context, req *user.CreateReq) (*user.Resp, er
 
 // List returns list of users
 func (s *Service) List(c context.Context, req *user.ListReq) (*user.ListResp, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+
 	u := s.auth.GetUser(c)
 
 	limit, offset := query.Paginate(req.Limit, req.Page)
@@ -107,6 +115,10 @@ func (s *Service) List(c context.Context, req *user.ListReq) (*user.ListResp, er
 
 // View returns single user
 func (s *Service) View(c context.Context, req *user.IDReq) (*user.Resp, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+
 	usr, err := s.udb.View(s.dbcl.WithContext(c), req.ID)
 	if err != nil {
 		return nil, unauthorizedErr
@@ -123,6 +135,10 @@ func (s *Service) View(c context.Context, req *user.IDReq) (*user.Resp, error) {
 
 // Delete deletes a user
 func (s *Service) Delete(c context.Context, req *user.IDReq) (*user.MessageResp, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+
 	dbCtx := s.dbcl.WithContext(c)
 	usr, err := s.udb.View(dbCtx, req.ID)
 	if err != nil {
@@ -145,6 +161,10 @@ func (s *Service) Delete(c context.Context, req *user.IDReq) (*user.MessageResp,
 
 // Update updates user's contact information
 func (s *Service) Update(c context.Context, req *user.UpdateReq) (*user.Resp, error) {
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
+
 	dbCtx := s.dbcl.WithContext(c)
 
 	if !s.rbac.EnforceUser(c, req.ID) {
