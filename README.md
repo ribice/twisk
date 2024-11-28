@@ -127,4 +127,4 @@ Special thanks to [@tonto](https://github.com/tonto) for previously creating som
 
 ## Author
 
-[Emir Ribic](https://ribice.ba)
+[Emir Ribic](https://dev.ribic.ba)
